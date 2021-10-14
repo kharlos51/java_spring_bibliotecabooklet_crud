@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+<style type="text/css">
+	body {
+	  min-height: 75rem;
+	  padding-top: 4.5rem;
+	}
+</style>
+<title>Biblioteca Booklet</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	  <div class="container-fluid">
+	    <a class="navbar-brand" href="#">Biblioteca Booklet</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarCollapse">
+	      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+	        <li class="nav-item">
+	          <a class="nav-link" aria-current="page" href="/libros/">Inicio</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" aria-current="page" href="listaLibros">Lista Libros</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" aria-current="page" href="agregarLibro">Agregar Libros</a>
+	        </li>
+	      </ul>
+		<h6 class="nav-link">Bienvenid@!</h6>
+	    </div>
+	  </div>
+	</nav>
+	
+	<main class="container">
+	  <div class="bg-light p-4 rounded">
+		<h1>Eliminar Libro</h1>
+		<form action="eliminarLibro" method="post" th:each="libro : ${listaLibro}">
+			<div class="mb-3" >
+				<input type="hidden" name="idLibro" id="idLibro" class="form-control" th:value="${libro.getIdLibro}">
+		    	<label for="titulo" class="form-label">Titulo</label>
+				<input type="text" name="titulo" id="titulo" class="form-control" disabled="disabled" th:value="${libro.getTitulo}">
+		  	</div>
+		  	<div class="mb-3">
+		    	<label for="anio" class="form-label">Año</label>
+				<input type="text" name="anio" id="anio" class="form-control" disabled="disabled" th:value="${libro.getAnio}">
+		  	</div>
+		  	<div class="mb-3">
+		    	<label for="autor" class="form-label">Autor</label>
+				<input type="text" name="autor" id="autor" class="form-control" disabled="disabled" th:value="${libro.getAutor}">
+		  	</div>
+		  	<div class="mb-3">
+		  		<label for="imprenta">Imprenta</label>
+				<input type="text" name="imprenta" id="imprenta" class="form-control" disabled="disabled" th:value="${libro.getImprenta}">
+		  	</div>
+		  	<div class="mb-3">
+		  		<h5>Esta Seguro que quiere Eliminar el libro?</h5>
+		  		<button class="btn btn-danger" type="submit">Eliminar</button>
+		  		<a class="btn btn-primary float-end" href="/libros/" role="button">Volver al Inicio</a>
+		  	</div>
+		</form>
+		<div th:if="${resultado == '100'}">
+			<span class="link-success">Libro Eliminado correctamente</span>
+			<a class="btn btn-primary float-end" href="listaLibros" role="button">Volver a Lista de Libros</a>
+		</div>
+		<div th:if="${resultado == '101'}">
+			<span class="link-danger" >Error Eliminando el libro</span>
+		</div>
+	  </div>
+	</main> 
+</body>
+</html>

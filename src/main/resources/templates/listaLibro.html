@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+<style type="text/css">
+	body {
+	  min-height: 75rem;
+	  padding-top: 4.5rem;
+	}
+</style>
+<title>Biblioteca Booklet</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	  <div class="container-fluid">
+	    <a class="navbar-brand" href="#">Biblioteca Booklet</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarCollapse">
+	      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+	        <li class="nav-item">
+	          <a class="nav-link" aria-current="page" href="/libros/">Inicio</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="listaLibros">Lista Libros</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" aria-current="page" href="agregarLibro">Agregar Libros</a>
+	        </li>
+	        <li class="nav-item">
+	          <form class="row g-3" action="buscarLibros" method="get">
+				  <div class="col-auto">
+				    <input type="text" class="form-control" id="busqueda"  name="busqueda" placeholder="Buscar por Autor o Titulo">
+				  </div>
+				  <div class="col-auto">
+				    <button type="submit" class="btn btn-primary">Buscar</button>
+				  </div>
+			  </form>
+	        </li>
+	      </ul>
+		<h6 class="nav-link">Bienvenid@!</h6>
+	    </div>
+	  </div>
+	</nav>
+	
+	<main class="container">
+	  <div class="bg-light p-4 rounded">
+	    <h1 class="text-center">Lista Libros</h1>
+	    <div th:if="${!not #lists.isEmpty(listaLibro)}">
+	    	<h5>La lista esta Vacia</h5>
+	    </div>
+	    <div th:unless="${#lists.isEmpty(listaLibro)}">
+	    	<table class="table table-hover">
+			   <thead>
+			      <tr>
+			        <th>Titulo</th>
+			        <th>Año</th>
+			        <th>Autor</th>
+			        <th>Imprenta</th>
+			        <th>Disponible</th>
+			        <th>Acciones</th>
+			      </tr>
+			   </thead>
+			   <tbody>
+			   	   <tr th:each="libro : ${listaLibro}">
+			        <td th:text="${libro.getTitulo}"></td>
+			        <td th:text="${libro.getAnio}"></td>
+			        <td th:text="${libro.getAutor}"></td>
+			        <td th:text="${libro.getImprenta}"></td>
+			        <td>
+			        	<span class="link-success" th:if="${libro.getDisponible == 1}">Si</span>
+    					<span class="link-danger" th:if="${libro.getDisponible == 0}">No</span>
+			        </td>
+			        <td>
+			        	<a th:href="@{modificarLibro(libroId=${libro.getIdLibro})}">Modificar</a>
+			        	<a th:href="@{modificarDisponibilidadLibro(libroId=${libro.getIdLibro})}">Cambiar Disponibilidad</a>
+			        	<a class="link-danger" th:href="@{eliminarLibro(libroId=${libro.getIdLibro})}">Eliminar</a>
+			        </td>
+			      </tr>
+			   </tbody>
+		    </table>
+	    </div>
+	   
+	  </div>
+	</main> 
+</body>
+</html>
